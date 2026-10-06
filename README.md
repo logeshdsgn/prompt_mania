@@ -33,8 +33,8 @@ A luxury-grade, high-precision prompt engineering library and AI architect works
   - Instant direct launch links to ChatGPT and Claude.
 
 - **Custom Luxury Design System**:
-  - Multi-palette accent themes (British Racing Green, Liquid Brass Gold, Electric Sapphire, Obsidian Crimson).
-  - Dark glassmorphism, responsive micro-animations, and robot avatar generator.
+  - Signature British Racing Green accent theme with milled glassmorphism.
+  - Responsive micro-animations and dynamic robot avatar generator.
 
 ---
 

@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import FrameworkModal from './components/FrameworkModal';
 import ProfileModal from './components/ProfileModal';
-import SettingsModal from './components/SettingsModal';
 import AiFrameworkArchitectModal from './components/AiFrameworkArchitectModal';
 import { frameworks as defaultFrameworks } from './data/frameworks';
 import { DEFAULT_DEV_PROFILE } from './data/profileDefaults';
@@ -12,7 +11,6 @@ import { DEFAULT_DEV_PROFILE } from './data/profileDefaults';
 const PINNED_STORAGE_KEY = 'prompt_mania_pinned';
 const CUSTOM_STORAGE_KEY = 'prompt_mania_custom';
 const PROFILE_STORAGE_KEY = 'prompt_mania_profile';
-const THEME_STORAGE_KEY = 'prompt_mania_theme';
 
 export default function App() {
   // 1. Pinned / Favorite Framework IDs
@@ -45,14 +43,8 @@ export default function App() {
     }
   });
 
-  // 4. Accent Theme Color
-  const [currentTheme, setCurrentTheme] = useState(() => {
-    try {
-      return localStorage.getItem(THEME_STORAGE_KEY) || 'green';
-    } catch {
-      return 'green';
-    }
-  });
+  // 4. Accent Theme: Locked to British Racing Green
+  const currentTheme = 'green';
 
   // Active selections and filters
   const [selectedFrameworkId, setSelectedFrameworkId] = useState('race');
@@ -64,8 +56,6 @@ export default function App() {
   const [isFrameworkModalOpen, setIsFrameworkModalOpen] = useState(false);
   const [editingFramework, setEditingFramework] = useState(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-
 
   // Sync to localStorage
   useEffect(() => {
@@ -87,11 +77,8 @@ export default function App() {
   }, [userProfile]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
-      document.documentElement.setAttribute('data-theme', currentTheme);
-    } catch (e) { console.error(e); }
-  }, [currentTheme]);
+    document.documentElement.setAttribute('data-theme', 'green');
+  }, []);
 
   // Combined framework list
   const allFrameworks = [...defaultFrameworks, ...customFrameworks];
@@ -136,18 +123,6 @@ export default function App() {
     }
   };
 
-  const handleResetAllData = () => {
-    localStorage.removeItem(PINNED_STORAGE_KEY);
-    localStorage.removeItem(CUSTOM_STORAGE_KEY);
-    localStorage.removeItem(PROFILE_STORAGE_KEY);
-    localStorage.removeItem(THEME_STORAGE_KEY);
-    setPinnedIds(['race']);
-    setCustomFrameworks([]);
-    setUserProfile(DEFAULT_DEV_PROFILE);
-    setCurrentTheme('green');
-    setSelectedFrameworkId('race');
-  };
-
   return (
     <div className="app" data-theme={currentTheme}>
       <Header 
@@ -156,7 +131,6 @@ export default function App() {
         userProfile={userProfile}
         onOpenProfile={() => setIsProfileModalOpen(true)}
         onCreateClick={handleOpenCreateModal}
-        onOpenSettings={() => setIsSettingsModalOpen(true)}
       />
 
       <div className="app-body">
@@ -207,14 +181,6 @@ export default function App() {
         pinnedCount={pinnedIds.length}
         customCount={customFrameworks.length}
         totalCount={allFrameworks.length}
-      />
-
-      <SettingsModal
-        isOpen={isSettingsModalOpen}
-        onClose={() => setIsSettingsModalOpen(false)}
-        onResetData={handleResetAllData}
-        currentTheme={currentTheme}
-        onSelectTheme={setCurrentTheme}
       />
     </div>
   );
