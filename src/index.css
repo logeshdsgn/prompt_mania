@@ -1524,6 +1524,7 @@ body {
   max-width: 620px;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   background: #11141D;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-lg);
@@ -1531,6 +1532,25 @@ body {
   display: flex;
   flex-direction: column;
   animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 232, 135, 0.3) transparent;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 232, 135, 0.3);
+  border-radius: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 232, 135, 0.55);
 }
 
 @keyframes modalScale {
@@ -1865,7 +1885,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 230px;
+  max-height: 240px;
+  overflow: hidden;
+  box-sizing: border-box;
   animation: popoverFadeIn 0.18s ease-out;
 }
 
@@ -1888,6 +1910,7 @@ body {
   border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
 }
 
 .icon-search-icon {
@@ -1908,17 +1931,38 @@ body {
 
 .icon-picker-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
   overflow-y: auto;
-  max-height: 160px;
-  padding-right: 2px;
+  overflow-x: hidden !important;
+  max-height: 165px;
+  padding-right: 4px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 232, 135, 0.35) transparent;
+}
+
+.icon-picker-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.icon-picker-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.icon-picker-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 232, 135, 0.35);
+  border-radius: 4px;
+}
+
+.icon-picker-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 232, 135, 0.6);
 }
 
 .icon-picker-option {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   padding: 6px 8px;
   border-radius: var(--radius-sm);
   background: transparent;
@@ -1929,6 +1973,9 @@ body {
   cursor: pointer;
   text-align: left;
   transition: all 0.15s;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .icon-picker-option:hover {
@@ -1952,9 +1999,11 @@ body {
 
 .icon-option-name {
   flex: 1;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 0.73rem;
 }
 
 .icon-selected-check {
