@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Check, Terminal, ExternalLink, Sparkles } from 'lucide-react';
+import { Copy, Check, Terminal, ExternalLink } from 'lucide-react';
 import { getAssembledPrompt } from '../utils/assembledPrompts';
 import { copyToClipboard } from '../utils/clipboard';
 
@@ -97,7 +97,7 @@ export default function AssembledPromptBox({ framework }) {
 
         <div className="terminal-footer">
           <div className="terminal-footer-hint">
-            <Sparkles size={12} className="sparkle-hint" />
+            <Terminal size={12} className="terminal-hint-icon" />
             <span>Paste this prompt directly into ChatGPT, Claude, or Gemini for structured, high-precision results.</span>
           </div>
           <div className="terminal-quick-links">

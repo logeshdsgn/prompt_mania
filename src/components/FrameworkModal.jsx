@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Plus, Trash2, Check, Grid } from 'lucide-react';
+import { X, Layers, Plus, Trash2, Check, Grid } from 'lucide-react';
 
 const ICON_OPTIONS = ['UserCog', 'Crosshair', 'Network', 'ClipboardCheck', 'Target', 'Zap', 'Shield', 'BookOpen', 'Palette', 'Trophy', 'Crown', 'MessageSquare'];
 
@@ -69,7 +69,7 @@ export default function FrameworkModal({
       ...prev,
       {
         title: `MODULE 0${prev.length + 1}`,
-        icon: 'Sparkles',
+        icon: 'Layers',
         description: '',
         detail: '',
         isCore: prev.length < 4
@@ -103,7 +103,7 @@ export default function FrameworkModal({
       isCustom: true,
       cards: cards.map((c, i) => ({
         title: c.title.trim() || `MODULE 0${i + 1}`,
-        icon: c.icon || 'Sparkles',
+        icon: c.icon || 'Layers',
         description: c.description.trim() || 'Custom prompt module description.',
         detail: c.detail.trim() || 'e.g. "Define specific requirements here."',
         isCore: c.isCore !== false,
@@ -125,7 +125,7 @@ export default function FrameworkModal({
       >
         <div className="modal-header">
           <div className="modal-title-group">
-            <Sparkles className="modal-header-icon glow" size={20} />
+            <Layers className="modal-header-icon glow" size={20} />
             <h2 id="framework-modal-title">{isEditing ? `Edit Framework: ${initialFramework.name}` : 'Create Custom Framework'}</h2>
           </div>
           <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">

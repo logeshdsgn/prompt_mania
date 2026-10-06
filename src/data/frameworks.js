@@ -392,7 +392,7 @@ export const frameworks = [
       },
       {
         title: 'EXTRAS',
-        icon: 'Sparkles',
+        icon: 'Layers',
         isCore: true,
         description:
           'Include supplementary directives, edge-case handling rules, fallback formats, and quality assurance benchmarks.',

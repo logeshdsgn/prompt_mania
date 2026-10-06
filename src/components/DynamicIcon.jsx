@@ -41,8 +41,8 @@ import {
   Shield,
   ShieldAlert,
   ShieldCheck,
+  Layers,
   SlidersHorizontal,
-  Sparkles,
   Stethoscope,
   Syringe,
   Target,
@@ -96,8 +96,8 @@ const ICON_MAP = {
   Shield,
   ShieldAlert,
   ShieldCheck,
+  Layers,
   SlidersHorizontal,
-  Sparkles,
   Stethoscope,
   Syringe,
   Target,
@@ -110,6 +110,6 @@ const ICON_MAP = {
 };
 
 export default function DynamicIcon({ name, size = 20, strokeWidth = 1.75, className = '' }) {
-  const Component = ICON_MAP[name] || Sparkles;
+  const Component = ICON_MAP[name] || Layers;
   return <Component size={size} strokeWidth={strokeWidth} className={className} />;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Check, Sparkles } from 'lucide-react';
+import { Copy, Check, Plus } from 'lucide-react';
 import DynamicIcon from './DynamicIcon';
 import { copyToClipboard } from '../utils/clipboard';
 
@@ -30,7 +30,7 @@ export default function ContentCard({ card, index, bentoSize = 'standard' }) {
           <span className="card-step-badge">STEP {cardNumber}</span>
         ) : (
           <div className="content-card-tag tag-addition">
-            <Sparkles size={11} />
+            <Plus size={11} />
             <span>ADDITION</span>
           </div>
         )}
