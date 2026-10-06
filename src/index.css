@@ -1789,6 +1789,290 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   VISUAL ICON PICKER POPOVER & GRID
+   ═══════════════════════════════════════════════════════════════ */
+.icon-picker-container {
+  position: relative;
+  width: 100%;
+}
+
+.icon-picker-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.84rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.icon-picker-trigger:hover,
+.icon-picker-trigger.active {
+  border-color: var(--green-primary);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 12px rgba(0, 232, 135, 0.15);
+}
+
+.icon-preview-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 232, 135, 0.12);
+  color: var(--green-primary);
+  border: 1px solid rgba(0, 232, 135, 0.3);
+  flex-shrink: 0;
+}
+
+.icon-picker-current-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.icon-picker-caret {
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.icon-picker-caret.open {
+  transform: rotate(180deg);
+  color: var(--green-primary);
+}
+
+.icon-picker-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 150;
+  background: #11141D;
+  border: 1px solid rgba(0, 232, 135, 0.35);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(0, 232, 135, 0.15);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 230px;
+  animation: popoverFadeIn 0.18s ease-out;
+}
+
+@keyframes popoverFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.icon-picker-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.icon-search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.icon-picker-search-input {
+  width: 100%;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  font-size: 0.78rem !important;
+  color: var(--text-primary) !important;
+  outline: none;
+}
+
+.icon-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 160px;
+  padding-right: 2px;
+}
+
+.icon-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.icon-picker-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+
+.icon-picker-option.selected {
+  background: rgba(0, 232, 135, 0.12);
+  border-color: rgba(0, 232, 135, 0.4);
+  color: var(--green-primary);
+  font-weight: 600;
+}
+
+.icon-option-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-option-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-selected-check {
+  color: var(--green-primary);
+  flex-shrink: 0;
+}
+
+.icon-picker-empty {
+  grid-column: 1 / -1;
+  padding: 12px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RECOMMENDED ADDITIONS IN FRAMEWORK MODAL
+   ═══════════════════════════════════════════════════════════════ */
+.cards-section-header.additions-header {
+  color: var(--brass-primary);
+  border-top: 1px dashed rgba(212, 175, 55, 0.3);
+  margin-top: 10px;
+  padding-top: 14px;
+}
+
+.section-icon-brass {
+  color: var(--brass-primary);
+}
+
+.section-badge-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--brass-primary);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.btn-add-addition {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--brass-primary);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.btn-add-addition:hover {
+  background: rgba(212, 175, 55, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.25);
+}
+
+.modal-card-item.addition-item {
+  border: 1px dashed rgba(212, 175, 55, 0.35);
+  background: rgba(212, 175, 55, 0.02);
+}
+
+.card-item-number.addition-number {
+  color: var(--brass-primary);
+}
+
+.empty-additions-prompt {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.015);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.empty-additions-prompt p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.btn-add-addition-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1px dashed rgba(212, 175, 55, 0.45);
+  color: var(--brass-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add-addition-outline:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-style: solid;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CREATOR WORKSPACE PROFILE MODAL STYLES (GitHub + Notion + PromptLayer)
    ═══════════════════════════════════════════════════════════════ */
 .creator-workspace-modal {

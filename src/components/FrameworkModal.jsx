@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { X, Plus, Trash2, Check, Grid } from 'lucide-react';
-
-const ICON_OPTIONS = ['UserCog', 'Crosshair', 'Network', 'ClipboardCheck', 'Target', 'Zap', 'Shield', 'BookOpen', 'Palette', 'Trophy', 'Crown', 'MessageSquare'];
+import { X, Plus, Trash2, Check, Grid, PlusCircle } from 'lucide-react';
+import IconPicker from './IconPicker';
 
 const DEFAULT_CARDS = [
   { title: 'ROLE', icon: 'UserCog', description: 'Define persona and domain expertise.', detail: 'e.g. "Act as a Lead Software Architect."' },
@@ -12,6 +11,7 @@ const DEFAULT_CARDS = [
 
 /**
  * Modal to Create or Edit a custom Prompt Framework.
+ * Supports visual icon picking and optional Recommended Additions.
  */
 export default function FrameworkModal({ 
   isOpen, 
@@ -26,6 +26,7 @@ export default function FrameworkModal({
   const [collection, setCollection] = useState('Custom');
   const [material, setMaterial] = useState('quilted-green');
   const [cards, setCards] = useState(DEFAULT_CARDS);
+  const [additions, setAdditions] = useState([]);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -36,13 +37,23 @@ export default function FrameworkModal({
       setSubtitle(initialFramework.subtitle || '');
       setCollection(initialFramework.collection || 'Custom');
       setMaterial(initialFramework.material || 'quilted-green');
-      setCards(initialFramework.cards && initialFramework.cards.length > 0 ? initialFramework.cards : DEFAULT_CARDS);
+      setCards(
+        initialFramework.cards && initialFramework.cards.length > 0 
+          ? initialFramework.cards 
+          : DEFAULT_CARDS
+      );
+      setAdditions(
+        initialFramework.recommendedAdditions && initialFramework.recommendedAdditions.length > 0
+          ? initialFramework.recommendedAdditions
+          : []
+      );
     } else {
       setName('');
       setSubtitle('');
       setCollection('Custom');
       setMaterial('quilted-green');
       setCards(DEFAULT_CARDS);
+      setAdditions([]);
     }
     setErrors({});
   }, [initialFramework, isOpen]);
@@ -58,6 +69,7 @@ export default function FrameworkModal({
 
   if (!isOpen) return null;
 
+  // Core Cards Handlers
   const handleCardChange = (idx, field, val) => {
     const next = [...cards];
     next[idx] = { ...next[idx], [field]: val };
@@ -72,7 +84,7 @@ export default function FrameworkModal({
         icon: 'Layers',
         description: '',
         detail: '',
-        isCore: prev.length < 4
+        isCore: true
       }
     ]);
   };
@@ -80,6 +92,30 @@ export default function FrameworkModal({
   const handleRemoveCard = (idx) => {
     if (cards.length <= 1) return;
     setCards(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  // Recommended Additions Handlers
+  const handleAddAddition = () => {
+    setAdditions(prev => [
+      ...prev,
+      {
+        title: `ADDITION 0${prev.length + 1}`,
+        icon: 'Plus',
+        description: '',
+        detail: '',
+        isCore: false
+      }
+    ]);
+  };
+
+  const handleRemoveAddition = (idx) => {
+    setAdditions(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleAdditionChange = (idx, field, val) => {
+    const next = [...additions];
+    next[idx] = { ...next[idx], [field]: val };
+    setAdditions(next);
   };
 
   const validate = () => {
@@ -106,7 +142,14 @@ export default function FrameworkModal({
         icon: c.icon || 'Layers',
         description: c.description.trim() || 'Custom prompt module description.',
         detail: c.detail.trim() || 'e.g. "Define specific requirements here."',
-        isCore: c.isCore !== false,
+        isCore: true,
+      })),
+      recommendedAdditions: additions.map((a, i) => ({
+        title: a.title.trim() || `ADDITION 0${i + 1}`,
+        icon: a.icon || 'Plus',
+        description: a.description.trim() || 'Supplementary directive.',
+        detail: a.detail.trim() || 'e.g. "Specify supplementary requirements or exclusions."',
+        isCore: false,
       })),
     };
 
@@ -170,16 +213,17 @@ export default function FrameworkModal({
             {errors.subtitle && <span className="error-text">{errors.subtitle}</span>}
           </div>
 
+          {/* Core Modules Configuration */}
           <div className="cards-section-header">
             <div className="cards-section-header-left">
               <Grid size={16} />
-              <h3>Modules Configuration</h3>
+              <h3>Core Modules Configuration</h3>
             </div>
             <button
               type="button"
               className="btn-add-module"
               onClick={handleAddCard}
-              title="Add extra module or recommended addition"
+              title="Add extra core module"
             >
               <Plus size={14} />
               <span>Add Module</span>
@@ -215,14 +259,10 @@ export default function FrameworkModal({
                   </div>
                   <div className="form-group">
                     <label>Icon</label>
-                    <select
+                    <IconPicker
                       value={c.icon}
-                      onChange={(e) => handleCardChange(idx, 'icon', e.target.value)}
-                    >
-                      {ICON_OPTIONS.map((ic) => (
-                        <option key={ic} value={ic}>{ic}</option>
-                      ))}
-                    </select>
+                      onChange={(val) => handleCardChange(idx, 'icon', val)}
+                    />
                   </div>
                 </div>
 
@@ -248,6 +288,102 @@ export default function FrameworkModal({
               </div>
             ))}
           </div>
+
+          {/* Recommended Additions Configuration */}
+          <div className="cards-section-header additions-header">
+            <div className="cards-section-header-left">
+              <PlusCircle size={16} className="section-icon-brass" />
+              <h3>Recommended Additions (Optional)</h3>
+              {additions.length > 0 && (
+                <span className="section-badge-hint">{additions.length}</span>
+              )}
+            </div>
+            <button
+              type="button"
+              className="btn-add-addition"
+              onClick={handleAddAddition}
+              title="Add supplementary addition module"
+            >
+              <Plus size={14} />
+              <span>Add Addition</span>
+            </button>
+          </div>
+
+          {additions.length === 0 ? (
+            <div className="empty-additions-prompt">
+              <p>
+                No recommended additions configured. Add optional supplementary modules 
+                (such as Exclusions, Guardrails, Formatting, or Edge-case rules) that complement this framework.
+              </p>
+              <button 
+                type="button" 
+                className="btn-add-addition-outline" 
+                onClick={handleAddAddition}
+              >
+                <Plus size={13} />
+                <span>+ Add First Recommended Addition</span>
+              </button>
+            </div>
+          ) : (
+            <div className="modal-cards-list additions-list">
+              {additions.map((a, idx) => (
+                <div key={idx} className="modal-card-item addition-item">
+                  <div className="card-item-top-row">
+                    <span className="card-item-number addition-number">
+                      ADDITION 0{idx + 1}
+                    </span>
+                    <button
+                      type="button"
+                      className="btn-remove-card"
+                      onClick={() => handleRemoveAddition(idx)}
+                      title="Remove addition"
+                    >
+                      <Trash2 size={13} />
+                      <span>Remove</span>
+                    </button>
+                  </div>
+                  <div className="form-row-2">
+                    <div className="form-group">
+                      <label>Addition Title</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. EXCLUSIONS & BOUNDARIES"
+                        value={a.title}
+                        onChange={(e) => handleAdditionChange(idx, 'title', e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Icon</label>
+                      <IconPicker
+                        value={a.icon}
+                        onChange={(val) => handleAdditionChange(idx, 'icon', val)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Instruction / Description</label>
+                    <textarea
+                      rows={2}
+                      placeholder="Specify optional supplementary rule or constraint..."
+                      value={a.description}
+                      onChange={(e) => handleAdditionChange(idx, 'description', e.target.value)}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Example Pattern</label>
+                    <input
+                      type="text"
+                      placeholder='e.g. "Exclude unverified claims or marketing buzzwords."'
+                      value={a.detail}
+                      onChange={(e) => handleAdditionChange(idx, 'detail', e.target.value)}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="modal-actions">
             <button type="button" className="btn-secondary" onClick={onClose}>
