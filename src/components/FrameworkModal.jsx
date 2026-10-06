@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Layers, Plus, Trash2, Check, Grid } from 'lucide-react';
+import { X, Plus, Trash2, Check, Grid } from 'lucide-react';
 
 const ICON_OPTIONS = ['UserCog', 'Crosshair', 'Network', 'ClipboardCheck', 'Target', 'Zap', 'Shield', 'BookOpen', 'Palette', 'Trophy', 'Crown', 'MessageSquare'];
 
@@ -124,10 +124,7 @@ export default function FrameworkModal({
         aria-labelledby="framework-modal-title"
       >
         <div className="modal-header">
-          <div className="modal-title-group">
-            <Layers className="modal-header-icon glow" size={20} />
-            <h2 id="framework-modal-title">{isEditing ? `Edit Framework: ${initialFramework.name}` : 'Create Custom Framework'}</h2>
-          </div>
+          <h2 id="framework-modal-title">{isEditing ? `Edit Framework: ${initialFramework.name}` : 'Create Custom Framework'}</h2>
           <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
             <X size={18} />
           </button>
