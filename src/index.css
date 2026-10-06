@@ -440,6 +440,7 @@ body {
   min-width: var(--sidebar-width);
   height: calc(100vh - var(--header-height));
   overflow-y: auto;
+  scrollbar-gutter: stable;
   padding: 18px 14px;
   display: flex;
   flex-direction: column;
@@ -839,6 +840,7 @@ body {
   font-size: 0.7rem;
   color: var(--text-muted);
   line-height: 1.4;
+  min-height: 2.8em;
   /* Line clamp to prevent awkward bottom text cutting */
   display: -webkit-box;
   -webkit-line-clamp: 2;
