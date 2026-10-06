@@ -7,6 +7,7 @@ import ProfileModal from './components/ProfileModal';
 import SettingsModal from './components/SettingsModal';
 import AiFrameworkArchitectModal from './components/AiFrameworkArchitectModal';
 import { frameworks as defaultFrameworks } from './data/frameworks';
+import { DEFAULT_DEV_PROFILE } from './data/profileDefaults';
 
 const PINNED_STORAGE_KEY = 'prompt_mania_pinned';
 const CUSTOM_STORAGE_KEY = 'prompt_mania_custom';
@@ -34,13 +35,13 @@ export default function App() {
     }
   });
 
-  // 3. User Profile (Empty by default for personalization)
+  // 3. User Profile
   const [userProfile, setUserProfile] = useState(() => {
     try {
       const saved = localStorage.getItem(PROFILE_STORAGE_KEY);
-      return saved ? JSON.parse(saved) : { name: '', title: '', bio: '' };
+      return saved ? JSON.parse(saved) : DEFAULT_DEV_PROFILE;
     } catch {
-      return { name: '', title: '', bio: '' };
+      return DEFAULT_DEV_PROFILE;
     }
   });
 
@@ -142,7 +143,7 @@ export default function App() {
     localStorage.removeItem(THEME_STORAGE_KEY);
     setPinnedIds(['race']);
     setCustomFrameworks([]);
-    setUserProfile({ name: '', title: '', bio: '' });
+    setUserProfile(DEFAULT_DEV_PROFILE);
     setCurrentTheme('green');
     setSelectedFrameworkId('race');
   };

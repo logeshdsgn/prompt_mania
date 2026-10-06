@@ -4,6 +4,7 @@ import {
   Briefcase, Cpu, Layers, Star, Building2, AtSign, FileCode, Dices
 } from 'lucide-react';
 import RobotAvatar from './RobotAvatar';
+import { DEFAULT_DEV_PROFILE } from '../data/profileDefaults';
 
 /**
  * Clean, Logical Developer Profile Modal.
@@ -19,28 +20,28 @@ export default function ProfileModal({
   customCount = 0,
   totalCount = 0
 }) {
-  const [name, setName] = useState(userProfile?.name || 'Loki');
-  const [handle, setHandle] = useState(userProfile?.handle || '@loki');
-  const [title, setTitle] = useState(userProfile?.title || 'Prompt Engineer & AI Architect');
-  const [organization, setOrganization] = useState(userProfile?.organization || 'AI Platform Engineering');
-  const [targetModel, setTargetModel] = useState(userProfile?.targetModel || 'Claude 3.5 Sonnet');
-  const [defaultFormat, setDefaultFormat] = useState(userProfile?.defaultFormat || 'Structured Markdown');
-  const [bio, setBio] = useState(userProfile?.bio || 'Building modular prompt architectures and systematic LLM workflows.');
-  const [avatarSeed, setAvatarSeed] = useState(userProfile?.avatarSeed || userProfile?.name || 'Loki');
+  const [name, setName] = useState(userProfile?.name || DEFAULT_DEV_PROFILE.name);
+  const [handle, setHandle] = useState(userProfile?.handle || DEFAULT_DEV_PROFILE.handle);
+  const [title, setTitle] = useState(userProfile?.title || DEFAULT_DEV_PROFILE.title);
+  const [organization, setOrganization] = useState(userProfile?.organization || DEFAULT_DEV_PROFILE.organization);
+  const [targetModel, setTargetModel] = useState(userProfile?.targetModel || DEFAULT_DEV_PROFILE.targetModel);
+  const [defaultFormat, setDefaultFormat] = useState(userProfile?.defaultFormat || DEFAULT_DEV_PROFILE.defaultFormat);
+  const [bio, setBio] = useState(userProfile?.bio || DEFAULT_DEV_PROFILE.bio);
+  const [avatarSeed, setAvatarSeed] = useState(userProfile?.avatarSeed || userProfile?.name || DEFAULT_DEV_PROFILE.avatarSeed);
   
   const [isEditing, setIsEditing] = useState(false);
   const [savedToast, setSavedToast] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      setName(userProfile?.name || 'Loki');
-      setHandle(userProfile?.handle || '@loki');
-      setTitle(userProfile?.title || 'Prompt Engineer & AI Architect');
-      setOrganization(userProfile?.organization || 'AI Platform Engineering');
-      setTargetModel(userProfile?.targetModel || 'Claude 3.5 Sonnet');
-      setDefaultFormat(userProfile?.defaultFormat || 'Structured Markdown');
-      setBio(userProfile?.bio || 'Building modular prompt architectures and systematic LLM workflows.');
-      setAvatarSeed(userProfile?.avatarSeed || userProfile?.name || 'Loki');
+      setName(userProfile?.name || DEFAULT_DEV_PROFILE.name);
+      setHandle(userProfile?.handle || DEFAULT_DEV_PROFILE.handle);
+      setTitle(userProfile?.title || DEFAULT_DEV_PROFILE.title);
+      setOrganization(userProfile?.organization || DEFAULT_DEV_PROFILE.organization);
+      setTargetModel(userProfile?.targetModel || DEFAULT_DEV_PROFILE.targetModel);
+      setDefaultFormat(userProfile?.defaultFormat || DEFAULT_DEV_PROFILE.defaultFormat);
+      setBio(userProfile?.bio || DEFAULT_DEV_PROFILE.bio);
+      setAvatarSeed(userProfile?.avatarSeed || userProfile?.name || DEFAULT_DEV_PROFILE.avatarSeed);
       setIsEditing(false);
       setSavedToast(false);
     }
@@ -65,7 +66,7 @@ export default function ProfileModal({
     if (!isEditing) {
       onSaveProfile({
         ...(userProfile || {}),
-        name: name.trim() || 'Loki',
+        name: name.trim() || DEFAULT_DEV_PROFILE.name,
         avatarSeed: newSeed
       });
       setSavedToast(true);
@@ -76,14 +77,14 @@ export default function ProfileModal({
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
     onSaveProfile({
-      name: name.trim() || 'Loki',
-      handle: handle.trim().startsWith('@') ? handle.trim() : `@${handle.trim() || 'loki'}`,
-      title: title.trim() || 'Prompt Engineer',
-      organization: organization.trim() || 'AI Engineering',
-      targetModel: targetModel || 'Claude 3.5 Sonnet',
-      defaultFormat: defaultFormat || 'Structured Markdown',
-      bio: bio.trim() || 'Building modular prompt architectures and systematic LLM workflows.',
-      avatarSeed: avatarSeed || 'Loki'
+      name: name.trim() || DEFAULT_DEV_PROFILE.name,
+      handle: handle.trim().startsWith('@') ? handle.trim() : `@${handle.trim() || 'architect'}`,
+      title: title.trim() || DEFAULT_DEV_PROFILE.title,
+      organization: organization.trim() || DEFAULT_DEV_PROFILE.organization,
+      targetModel: targetModel || DEFAULT_DEV_PROFILE.targetModel,
+      defaultFormat: defaultFormat || DEFAULT_DEV_PROFILE.defaultFormat,
+      bio: bio.trim() || DEFAULT_DEV_PROFILE.bio,
+      avatarSeed: avatarSeed || DEFAULT_DEV_PROFILE.avatarSeed
     });
     setSavedToast(true);
     setIsEditing(false);
@@ -92,30 +93,20 @@ export default function ProfileModal({
 
   const handleClearProfile = () => {
     if (window.confirm('Reset profile details back to default profile?')) {
-      const defaults = {
-        name: 'Loki',
-        handle: '@loki',
-        title: 'Prompt Engineer & AI Architect',
-        organization: 'AI Platform Engineering',
-        targetModel: 'Claude 3.5 Sonnet',
-        defaultFormat: 'Structured Markdown',
-        bio: 'Building modular prompt architectures and systematic LLM workflows.',
-        avatarSeed: 'Loki'
-      };
-      onSaveProfile(defaults);
-      setName(defaults.name);
-      setHandle(defaults.handle);
-      setTitle(defaults.title);
-      setOrganization(defaults.organization);
-      setTargetModel(defaults.targetModel);
-      setDefaultFormat(defaults.defaultFormat);
-      setBio(defaults.bio);
-      setAvatarSeed(defaults.avatarSeed);
+      onSaveProfile(DEFAULT_DEV_PROFILE);
+      setName(DEFAULT_DEV_PROFILE.name);
+      setHandle(DEFAULT_DEV_PROFILE.handle);
+      setTitle(DEFAULT_DEV_PROFILE.title);
+      setOrganization(DEFAULT_DEV_PROFILE.organization);
+      setTargetModel(DEFAULT_DEV_PROFILE.targetModel);
+      setDefaultFormat(DEFAULT_DEV_PROFILE.defaultFormat);
+      setBio(DEFAULT_DEV_PROFILE.bio);
+      setAvatarSeed(DEFAULT_DEV_PROFILE.avatarSeed);
       setIsEditing(false);
     }
   };
 
-  const displayHandle = handle ? (handle.startsWith('@') ? handle : `@${handle}`) : '@loki';
+  const displayHandle = handle ? (handle.startsWith('@') ? handle : `@${handle}`) : DEFAULT_DEV_PROFILE.handle;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -141,7 +132,7 @@ export default function ProfileModal({
           <div className="creator-banner-card real-profile-banner">
             <div className="creator-banner-left">
               <div className="creator-avatar-container">
-                <RobotAvatar seed={avatarSeed || name || 'Loki'} size={46} />
+                <RobotAvatar seed={avatarSeed || name || DEFAULT_DEV_PROFILE.avatarSeed} size={46} />
                 <button
                   type="button"
                   className="avatar-dice-roll-btn"
@@ -155,7 +146,7 @@ export default function ProfileModal({
 
               <div className="creator-details">
                 <div className="creator-name-row">
-                  <h3 className="creator-name">{name || 'Loki'}</h3>
+                  <h3 className="creator-name">{name || DEFAULT_DEV_PROFILE.name}</h3>
                   <span className="creator-handle-badge">{displayHandle}</span>
                 </div>
                 <div className="creator-sub-row">

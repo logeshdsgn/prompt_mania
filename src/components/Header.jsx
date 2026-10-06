@@ -14,8 +14,8 @@ export default function Header({
   onCreateClick,
   onOpenSettings
 }) {
-  const profileName = userProfile?.name || 'My Profile';
-  const profileTitle = userProfile?.title || 'Prompt Creator';
+  const profileName = userProfile?.name || 'Prompt Architect';
+  const profileTitle = userProfile?.title || 'AI Prompt Engineer';
 
   return (
     <header className="header">
