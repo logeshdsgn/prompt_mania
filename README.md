@@ -20,10 +20,6 @@ A luxury-grade, high-precision prompt engineering library and AI architect works
   - Contextual 3, 4, 5, and 6-module layout architecture.
   - Distinct visual separation between Official Core Modules and Recommended Additions.
 
-- **AI Framework Architect**:
-  - Generate domain-tailored, multi-step prompt frameworks using prompt heuristics and domain analysis.
-  - Interactive inspection and JSON export.
-
 - **Custom Framework Studio**:
   - Create and edit bespoke prompting frameworks with persistent `localStorage` support.
   - Favorite and pin frequently used frameworks.

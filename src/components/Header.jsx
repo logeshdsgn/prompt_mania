@@ -1,17 +1,16 @@
 import React from 'react';
-import { Search, X, Sparkles } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import RobotAvatar from './RobotAvatar';
 
 /**
  * Modern luxury header with custom Prompt Mania logo, developer profile badge,
- * functional search query input, and AI architect creation trigger.
+ * and functional search query input.
  */
 export default function Header({
   searchQuery,
   onSearchChange,
   userProfile,
-  onOpenProfile,
-  onCreateClick
+  onOpenProfile
 }) {
   const profileName = userProfile?.name || 'Prompt Architect';
   const profileTitle = userProfile?.title || 'AI Prompt Engineer';
@@ -61,24 +60,13 @@ export default function Header({
       </div>
 
       <div className="header-right">
-        {/* Quick Create / AI Framework Architect */}
-        <button 
-          className="btn-header-quick-add" 
-          onClick={onCreateClick}
-          title="Create custom framework with AI Architect"
-          aria-label="Create framework with AI Architect"
-        >
-          <Sparkles size={13} />
-          <span>AI Architect</span>
-        </button>
-
         {/* Profile Section */}
         <div 
           className="profile-area" 
           onClick={onOpenProfile} 
           role="button" 
           tabIndex={0} 
-          title="Customize Profile & Settings"
+          title="Customize Profile"
           aria-label="User Profile"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {

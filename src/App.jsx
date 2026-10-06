@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import FrameworkModal from './components/FrameworkModal';
 import ProfileModal from './components/ProfileModal';
-import AiFrameworkArchitectModal from './components/AiFrameworkArchitectModal';
 import { frameworks as defaultFrameworks } from './data/frameworks';
 import { DEFAULT_DEV_PROFILE } from './data/profileDefaults';
 
@@ -52,7 +51,6 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Modals state
-  const [isAiArchitectOpen, setIsAiArchitectOpen] = useState(false);
   const [isFrameworkModalOpen, setIsFrameworkModalOpen] = useState(false);
   const [editingFramework, setEditingFramework] = useState(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -94,7 +92,8 @@ export default function App() {
   };
 
   const handleOpenCreateModal = () => {
-    setIsAiArchitectOpen(true);
+    setEditingFramework(null);
+    setIsFrameworkModalOpen(true);
   };
 
   const handleOpenEditModal = (framework) => {
@@ -130,7 +129,6 @@ export default function App() {
         onSearchChange={setSearchQuery}
         userProfile={userProfile}
         onOpenProfile={() => setIsProfileModalOpen(true)}
-        onCreateClick={handleOpenCreateModal}
       />
 
       <div className="app-body">
@@ -160,12 +158,6 @@ export default function App() {
       </div>
 
       {/* Modals */}
-      <AiFrameworkArchitectModal
-        isOpen={isAiArchitectOpen}
-        onClose={() => setIsAiArchitectOpen(false)}
-        onSaveFramework={handleSaveFramework}
-      />
-
       <FrameworkModal
         isOpen={isFrameworkModalOpen}
         onClose={() => setIsFrameworkModalOpen(false)}
