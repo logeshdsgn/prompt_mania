@@ -2,7 +2,11 @@
 
 A luxury-grade, high-precision prompt engineering library and AI architect workspace. Designed for prompt engineers, AI architects, researchers, and developers to craft, test, and master structured prompting paradigms.
 
-**[Open the deployed app](https://logeshdsgn.github.io/prompt_mania/)**
+<p align="center">
+  <img src="public/deployment-sparkles.gif" alt="Animated sparkles" width="48" height="24" />
+  <strong><a href="https://logeshdsgn.github.io/prompt_mania/">Prompt Mania</a> - Live deployment</strong>
+  <img src="public/deployment-sparkles.gif" alt="Animated sparkles" width="48" height="24" />
+</p>
 
 ---
 
